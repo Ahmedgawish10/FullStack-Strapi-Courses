@@ -54,6 +54,12 @@
       "relation": "manyToOne",
       "target": "api::cart.cart",
       "inversedBy": "courses"
+    },
+    "wishlist": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::wishlist.wishlist",
+      "inversedBy": "courses"
     }
   }
 }

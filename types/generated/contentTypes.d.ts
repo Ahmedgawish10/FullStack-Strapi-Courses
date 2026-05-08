@@ -848,6 +848,11 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'manyToOne',
       'api::cart.cart'
     >;
+    wishlist: Attribute.Relation<
+      'api::course.course',
+      'manyToOne',
+      'api::wishlist.wishlist'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -903,6 +908,42 @@ export interface ApiOrderOrder extends Schema.CollectionType {
   };
 }
 
+export interface ApiWishlistWishlist extends Schema.CollectionType {
+  collectionName: 'wishlists';
+  info: {
+    singularName: 'wishlist';
+    pluralName: 'wishlists';
+    displayName: 'Wishlist';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    userName: Attribute.String;
+    email: Attribute.Email;
+    courses: Attribute.Relation<
+      'api::wishlist.wishlist',
+      'oneToMany',
+      'api::course.course'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::wishlist.wishlist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::wishlist.wishlist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -924,6 +965,7 @@ declare module '@strapi/types' {
       'api::cart.cart': ApiCartCart;
       'api::course.course': ApiCourseCourse;
       'api::order.order': ApiOrderOrder;
+      'api::wishlist.wishlist': ApiWishlistWishlist;
     }
   }
 }
